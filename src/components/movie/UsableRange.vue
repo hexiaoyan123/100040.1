@@ -56,10 +56,8 @@ export default {
       voucherNo: this.$route.query.voucherNo,
       // 使用范围
       usableRange: {},
-      //影院列表显示隐藏
-      thisIndex: -1,
-      //区隐藏
-      cityshow: true
+      // 影院列表显示隐藏
+      thisIndex: -1
     };
   },
   created() {
@@ -106,7 +104,7 @@ export default {
         }
       });
     },
-    //点击收起影院列表
+    // 点击收起影院列表
     clickarea(areaKey) {
       if (this.thisIndex == null) {
         this.thisIndex = areaKey;

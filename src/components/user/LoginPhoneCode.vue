@@ -92,6 +92,7 @@ export default {
   created() {
     // 获取图片验证码
     this.getImageCode();
+    this.$store.commit("ctrlLoader", true);
   },
   methods: {
     // 获取图片验证码
@@ -103,6 +104,7 @@ export default {
       vm.$http
         .get("/v1/getImageCode/" + vm.phoneCode.imgId)
         .then(function(response) {
+          vm.$store.commit("ctrlLoader", false);
           vm.phoneCode.imgUrl = "data:image/png;base64," + response.data.result;
         })
         .catch(function(error) {

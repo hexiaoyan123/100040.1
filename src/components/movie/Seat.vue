@@ -220,9 +220,9 @@ export default {
   data() {
     return {
       // 缩放事件
-      zoom: 1,
-      minZoom: 1, // 最小缩放
-      lastZoom: 1,
+      zoom: 0.8,
+      minZoom: 0.7, // 最小缩放
+      lastZoom: 0.8,
       borTop: 0, // 向上便宜距离
       // 影院
       cinema: {},
@@ -340,6 +340,15 @@ export default {
               .offsetWidth;
             let marginwidth = sumWidth - outWidth / 2;
             vm.marginLeft = marginwidth;
+            // 缩放 到可视区域
+            let visibleWidth = tempArr[0].length * 31;
+            let DivWidth = document.querySelector(".seats-wrapper-out")
+              .offsetWidth;
+            if (visibleWidth <= 400) {
+              vm.zoom = 0.9;
+            } else {
+              vm.zoom = DivWidth / visibleWidth;
+            }
           } else {
             vm.noSeatList = true;
           }
@@ -479,15 +488,15 @@ export default {
     },
     // 缩放事件
     pinch(e) {
-      if (e.zoom == 1) {
+      if (e.zoom == 0.8) {
         this.lastZoom = this.zoom;
       }
       let zoomNum = e.zoom * this.lastZoom;
 
       if (zoomNum < this.minZoom) {
         zoomNum = this.minZoom;
-      } else if (zoomNum > 3) {
-        zoomNum = 3;
+      } else if (zoomNum > 2) {
+        zoomNum = 2;
       }
       this.zoom = zoomNum;
     },
@@ -933,7 +942,7 @@ header .iconfont {
   position: absolute;
   z-index: 10;
   width: 4.6%;
-  top: 150px;
+  top: 140px;
   left: 10px;
   background-color: #cacaca;
   border-radius: 20px;
