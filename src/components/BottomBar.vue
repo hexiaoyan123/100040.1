@@ -19,12 +19,34 @@
 <script>
 export default {
   name: "BottomBar",
+  provide() {
+    return {
+      reload: this.reload
+    };
+  },
   data() {
-    return {};
+    return {
+      isRouterAlive: true
+    };
+  },
+  watch: {
+    $route(to, from) {
+      // 监听路由是否变化
+      if (to.path == "/movie/cinema") {
+        location.reload();
+      }
+    }
   },
   methods: {
     goPath(path) {
       this.$router.push(path);
+    },
+    //监听页面实时刷新
+    reload() {
+      this.isRouterAlive = false;
+      this.$nextTick(function() {
+        this.isRouterAlive = true;
+      });
     }
   },
   computed: {

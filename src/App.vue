@@ -386,6 +386,14 @@ figure {
   background-position: 0 0;
   background-size: 100%;
 }
+.icon-top {
+  display: inline-block;
+  height: 22px;
+  width: 22px;
+  background: url(./assets/xb/top.png) no-repeat;
+  background-position: 0 0;
+  background-size: 100%;
+}
 .iocn-close {
   display: inline-block;
   height: 30px;

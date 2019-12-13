@@ -2,20 +2,20 @@
   <div class="container">
     <!-- 省 -->
     <div v-for="(province, provinceKey) in usableRange" :key="provinceKey">
-      <div class="city-name">
+      <div class="city-name" @click="clickCity(provinceKey)">
         {{provinceKey}}
-        <i class="icon-down"></i>
+        <i :class="provinceKey === citIndex? 'icon-down':'icon-top'"></i>
       </div>
 
       <!-- 市 -->
-      <div v-for="(city, cityKey) in province" :key="cityKey">
+      <div v-for="(city, cityKey) in province" :key="cityKey" v-show="provinceKey === citIndex">
         <div class="first-city">{{cityKey}}</div>
 
         <!-- 区 -->
         <div v-for="(area, areaKey) in city" :key="areaKey">
-          <div class="first-city" @click="clicKarea(areaKey)">
+          <div class="first-city" @click="clickArea(areaKey)">
             {{areaKey}}
-            <i class="icon-down"></i>
+            <i :class="areaKey === thisIndex? 'icon-down':'icon-top'"></i>
           </div>
 
           <div class="ca-list" v-show="areaKey === thisIndex">
@@ -54,7 +54,8 @@ export default {
       // 使用范围
       usableRange: {},
       // 影院列表显示隐藏
-      thisIndex: -1
+      thisIndex: -1,
+      citIndex: -1
     };
   },
   created() {
@@ -104,11 +105,23 @@ export default {
       });
     },
     // 点击收起影院列表
-    clicKarea(areaKey) {
-      if (this.thisIndex == null) {
+    clickArea(areaKey) {
+      if (this.thisIndex == -1) {
+        this.thisIndex = areaKey;
+      } else if (this.thisIndex == null) {
         this.thisIndex = areaKey;
       } else {
         this.thisIndex = null;
+      }
+    },
+    // 点击收起区
+    clickCity(provinceKey) {
+      if (this.citIndex == -1) {
+        this.citIndex = provinceKey;
+      } else if (this.citIndex == null) {
+        this.citIndex = provinceKey;
+      } else {
+        this.citIndex = null;
       }
     }
   }
@@ -130,14 +143,14 @@ export default {
 }
 .first-city {
   text-align: left;
-  padding-left: 24px;
-  margin-top: 20px;
-  padding-bottom: 20px;
+  padding-left: 30px;
+  margin-top: 30px;
+  padding-bottom: 30px;
   border-bottom: 1px solid #f5f5f5;
 }
 .first-city i {
   float: right;
-  margin-right: 20px;
+  margin-right: 30px;
 }
 
 .Cinemasum {

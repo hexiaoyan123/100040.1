@@ -13,7 +13,8 @@
           <span style="color:#D3D3D3">余额</span>
           <div class="Cardcontent-money">
             <i>￥</i>
-            {{voucher.balance}}
+            <!-- {{voucher.balance}} -->
+            59.7
           </div>
         </div>
       </div>
@@ -127,10 +128,12 @@ export default {
 .Cardcontent-right {
   float: right;
   margin-top: 40px;
-  margin-right: 40px;
+  text-align: right;
+  margin-right: 30px;
 }
 .Cardcontent-money {
   color: #ff5162;
+  font-size: 28px;
   margin-top: 115px;
 }
 .tips {
