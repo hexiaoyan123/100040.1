@@ -69,6 +69,7 @@
         class="card-footer-right"
         v-show="selectedVoucher.totalAmount >= orderPay.orderAmount"
         @click="confirmPayment(7)"
+        :style="{'background-color': backgroundcolor}"
       >确认支付</div>
     </div>
 
@@ -145,7 +146,10 @@ export default {
       voucherForm: {
         voucher: "",
         voucherPassword: ""
-      }
+      },
+      // 点击请求限制
+      isDisable: true,
+      backgroundcolor: ""
     };
   },
   created() {
@@ -366,48 +370,58 @@ export default {
         // 金额（单位：分，微信支付时和微信补差时使用）
         wechatPayPrice: vm.orderPay.orderAmount - vm.selectedVoucher.totalAmount
       };
+      if (this.isDisable) {
+        this.isDisable = false;
+        this.backgroundcolor = "#8f8f8f";
 
-      vm.$http
-        .post("/panda-cinema-api/v1/payment", paymentOrder)
-        .then(function(response) {
-          if (response.data.code == "1000") {
-            if (response.data.result) {
-              let item = response.data.result;
-              WeixinJSBridge.invoke(
-                "getBrandWCPayRequest",
-                {
-                  // 公众号名称，由商户传入
-                  appId: item.appId,
-                  // 时间戳，自1970年以来的秒数
-                  timeStamp: item.timeStamp,
-                  // 随机串
-                  nonceStr: item.nonceStr,
-                  package: item.package,
-                  // 微信签名方式
-                  signType: "MD5",
-                  // 微信签名
-                  paySign: item.paySign
-                },
-                function(res) {
-                  if ("get_brand_wcpay_request:ok" == res.err_msg) {
-                    vm.$router.push("/success");
-                  } else if ("get_brand_wcpay_request:fail" == res.err_msg) {
-                    vm.$router.push("/fail");
-                  } else if ("get_brand_wcpay_request:cancel" == res.err_msg) {
-                    vm.$router.push("/fail");
+        vm.$http
+          .post("/panda-cinema-api/v1/payment", paymentOrder)
+          .then(function(response) {
+            if (response.data.code == "1000") {
+              if (response.data.result) {
+                let item = response.data.result;
+                WeixinJSBridge.invoke(
+                  "getBrandWCPayRequest",
+                  {
+                    // 公众号名称，由商户传入
+                    appId: item.appId,
+                    // 时间戳，自1970年以来的秒数
+                    timeStamp: item.timeStamp,
+                    // 随机串
+                    nonceStr: item.nonceStr,
+                    package: item.package,
+                    // 微信签名方式
+                    signType: "MD5",
+                    // 微信签名
+                    paySign: item.paySign
+                  },
+                  function(res) {
+                    if ("get_brand_wcpay_request:ok" == res.err_msg) {
+                      vm.$router.push("/success");
+                    } else if ("get_brand_wcpay_request:fail" == res.err_msg) {
+                      vm.$router.push("/fail");
+                    } else if (
+                      "get_brand_wcpay_request:cancel" == res.err_msg
+                    ) {
+                      vm.$router.push("/fail");
+                    }
                   }
-                }
-              );
+                );
+              } else {
+                vm.$router.push("/success");
+              }
             } else {
-              vm.$router.push("/success");
+              vm.$toast(response.data.msg);
+              this.isDisable = true;
+              this.backgroundcolor = "#ff5162";
             }
-          } else {
-            vm.$toast(response.data.msg);
-          }
-        })
-        .catch(function(error) {
-          vm.$toast("请求超时，请稍后再试！");
-        });
+          })
+          .catch(function(error) {
+            vm.$toast("请求超时，请稍后再试！");
+            this.isDisable = true;
+            this.backgroundcolor = "#ff5162";
+          });
+      }
     },
 
     // 确认绑定

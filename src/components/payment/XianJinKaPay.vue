@@ -147,7 +147,7 @@ export default {
         voucher: "",
         voucherPassword: ""
       },
-      // 点击之后只能发送一次请求
+      // 点击请求限制
       isDisable: true,
       backgroundcolor: ""
     };
