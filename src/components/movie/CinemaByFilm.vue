@@ -123,6 +123,7 @@ export default {
     } else {
       this.getCity(this.$init.channel.defaultCity);
     }
+    this.$store.commit("ctrlLoader", true);
   },
   methods: {
     // 返回上一页
@@ -154,6 +155,7 @@ export default {
         )
         .then(function(response) {
           if (response.data.code == "1000") {
+            vm.$store.commit("ctrlLoader", false);
             if (response.data.result) {
               vm.showCinemaList = response.data.result;
 

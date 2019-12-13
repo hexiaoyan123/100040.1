@@ -37,7 +37,7 @@
         </van-cell-group>
       </div>
       <!-- 倒计时 -->
-      <div class="count">
+      <div class="count count-bg">
         <img
           src="../../assets/xb/time.png"
           height="20"
@@ -565,10 +565,6 @@ header .iconfont {
   height: 75px;
   color: #fff;
   padding: 3px;
-  /* background-image: url(../../assets/szbg.png);
-  background-size: 100% 100%; */
-  border-top-left-radius: 40%;
-  border-bottom-left-radius: 40%;
   background: -webkit-gradient(
     linear,
     left top,
@@ -576,6 +572,10 @@ header .iconfont {
     from(#ff8e62),
     to(#fd4471)
   );
+}
+.count-bg {
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
 }
 .count p {
   margin-top: 3px;

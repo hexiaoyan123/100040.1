@@ -192,7 +192,7 @@
           温馨提示
           <i class="iocn-close" @click="phoneForm = false"></i>
         </p>
-        <p>请认真确认手机号，此手机号用于接收电影取票码。</p>
+        <p>为了便于查询，请填写您的订票手机号码。</p>
         <form class="search-block" action="javascript:void 0">
           <input
             class="bind-phone-input"
@@ -346,6 +346,8 @@ export default {
               .offsetWidth;
             if (visibleWidth <= 400) {
               vm.zoom = 0.9;
+            } else if (sumWidth1 >= 1200) {
+              vm.zoom = 0.4;
             } else {
               vm.zoom = DivWidth / visibleWidth;
             }
@@ -495,8 +497,8 @@ export default {
 
       if (zoomNum < this.minZoom) {
         zoomNum = this.minZoom;
-      } else if (zoomNum > 2) {
-        zoomNum = 2;
+      } else if (zoomNum > 1.5) {
+        zoomNum = 1.5;
       }
       this.zoom = zoomNum;
     },
@@ -719,31 +721,31 @@ header .iconfont {
 
 .seat-0 {
   background: url(../../assets/movie/setas-o.png);
-  background-color: #ffffff;
+  background-color: #f7f7f7;
   background-size: 100% 100%;
 }
 
 .seat-1 {
   background: url(../../assets/movie/setas-o.png);
-  background-color: #ffffff;
+  background-color: #f7f7f7;
   background-size: 100% 100%;
 }
 
 .seat-2 {
   background: url(../../assets/movie/setas-on.png);
-  background-color: #ffffff;
+  background-color: #f7f7f7;
   background-size: 100% 100%;
 }
 
 .seat-3 {
   background: url(../../assets/movie/setas-un.png);
-  background-color: #ffffff;
+  background-color: #f7f7f7;
   background-size: 100% 100%;
 }
 
 .seat-4 {
   background: url(../../assets/movie/seats-love.png);
-  background-color: #ffffff;
+  background-color: #f7f7f7;
   background-size: 100% 100%;
 }
 
