@@ -2,26 +2,23 @@
   <div class="container">
     <!-- 省 -->
     <div v-for="(province, provinceKey) in usableRange" :key="provinceKey">
-      <div class="cityname">
+      <div class="city-name">
         {{provinceKey}}
-        <i class="icon-jiantou"></i>
+        <i class="icon-down"></i>
       </div>
 
       <!-- 市 -->
       <div v-for="(city, cityKey) in province" :key="cityKey">
-        <div class="firstcity">
-          {{cityKey}}
-          <!-- <i class="icon-jiantou"></i> -->
-        </div>
+        <div class="first-city">{{cityKey}}</div>
 
         <!-- 区 -->
         <div v-for="(area, areaKey) in city" :key="areaKey">
-          <div class="firstcity" @click="clickarea(areaKey)">
+          <div class="first-city" @click="clicKarea(areaKey)">
             {{areaKey}}
-            <i class="icon-jiantou"></i>
+            <i class="icon-down"></i>
           </div>
 
-          <div class="ca-list" v-show="areaKey ===thisIndex">
+          <div class="ca-list" v-show="areaKey === thisIndex">
             <div
               class="cs-item"
               v-for="(cinema, cinemaKey) in area"
@@ -40,7 +37,7 @@
 
     <h3 class="noData">
       <i class="keguan">
-        <img src="../../assets/keguan.png" width="100%" />
+        <img src="@/assets/keguan.png" width="100%" />
       </i>
       <span>客官，没有更多了！</span>
     </h3>
@@ -62,6 +59,7 @@ export default {
   },
   created() {
     this.getVoucherUsableRange();
+    this.$store.commit("ctrlLoader", true);
   },
   methods: {
     // 返回上一页
@@ -81,6 +79,7 @@ export default {
         .get("/panda-cinema-api/v2/getVoucherUsableRange/" + vm.voucherNo)
         .then(function(response) {
           if (response.data.code == "1000") {
+            vm.$store.commit("ctrlLoader", false);
             vm.usableRange = response.data.result;
           } else {
             vm.$toast(response.data.msg);
@@ -105,7 +104,7 @@ export default {
       });
     },
     // 点击收起影院列表
-    clickarea(areaKey) {
+    clicKarea(areaKey) {
       if (this.thisIndex == null) {
         this.thisIndex = areaKey;
       } else {
@@ -120,7 +119,7 @@ export default {
 .container {
   color: #4d4d4d;
 }
-.cityname {
+.city-name {
   height: 80px;
   line-height: 80px;
   font-size: 3.5vw;
@@ -129,14 +128,14 @@ export default {
   border-bottom: 1px solid #f5f5f5;
   margin-top: 10px;
 }
-.firstcity {
+.first-city {
   text-align: left;
   padding-left: 24px;
   margin-top: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid #f5f5f5;
 }
-.firstcity i {
+.first-city i {
   float: right;
   margin-right: 20px;
 }

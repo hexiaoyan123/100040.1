@@ -378,7 +378,7 @@ figure {
   background-position: 0 0;
   background-size: 100%;
 }
-.icon-jiantou {
+.icon-down {
   display: inline-block;
   height: 22px;
   width: 22px;
