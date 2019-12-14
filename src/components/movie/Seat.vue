@@ -346,7 +346,7 @@ export default {
               .offsetWidth;
             if (visibleWidth <= 400) {
               vm.zoom = 0.9;
-            } else if (sumWidth1 >= 1200) {
+            } else if (visibleWidth >= 1200) {
               vm.zoom = 0.4;
             } else {
               vm.zoom = DivWidth / visibleWidth;

@@ -12,6 +12,7 @@
 <script>
 import Vheader from "../HeaderV";
 import OrderMovieList from "./OrderList";
+//import OrderMovieList from "./OrderList.1";
 export default {
   components: {
     "order-movie-list": OrderMovieList,
